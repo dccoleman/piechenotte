@@ -1,3 +1,4 @@
+import { BodiesFactory } from "matter";
 import Phaser from "phaser";
 
 const RotationOffset = Math.PI / 2;
@@ -45,26 +46,21 @@ export class Arrow extends Phaser.Physics.Matter.Image {
 
     this.scene.data.set("arrowRotation", angle);
 
-    // Calculate position 50 units from origin on same angle
-    const yDiff = PositionOffset * Math.sin(angle);
-    const xDiff = PositionOffset * Math.cos(angle);
+    const v = new Phaser.Math.Vector2(this.originX, this.originY).add(
+      vector.set(PositionOffset, 0).rotate(angle)
+    );
 
-    // Set offset based on calculated values
-    this.offsetY = yDiff;
-    this.offsetX = xDiff;
-
-    this.handleChange(this.originX, this.originY);
+    this.setX(v.x);
+    this.setY(v.y);
   }
 
   handleOriginChange(x, y) {
-    this.originY = y;
-    this.originX = x;
+    const xDiff = this.originX - x;
+    const yDiff = this.originY - y;
 
-    this.handleChange(x, y);
-  }
+    console.log(xDiff, yDiff);
 
-  handleChange(x, y) {
-    this.setY(y + this.offsetY);
-    this.setX(x + this.offsetX);
+    this.setX(this.x + xDiff);
+    this.setY(this.y + yDiff);
   }
 }

@@ -23,6 +23,11 @@ export class Game extends Phaser.Scene {
 
     this.addRing({ x: 400, y: 100 });
     this.addRing({ x: 400, y: 400, type: "red" });
+    this.addRing({ x: 300, y: 400, type: "red" });
+    this.addRing({ x: 500, y: 400, type: "red" });
+    this.addRing({ x: 300, y: 500, type: "red" });
+    this.addRing({ x: 400, y: 500, type: "red" });
+    this.addRing({ x: 500, y: 500, type: "red" });
   }
 
   init() {

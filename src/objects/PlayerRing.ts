@@ -46,7 +46,7 @@ export class PlayerRing extends Ring {
     });
 
     this.scene.events.on("update", () => {
-      this.arrow.handleOriginChange(this.x, this.y);
+      // this.arrow.handleOriginChange(this.x, this.y);
 
       const now = Date.now();
       const diff = now - this.lastUpdate;
