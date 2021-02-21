@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { PlayerRing } from "./objects/PlayerRing";
 import { Ring } from "./objects/Ring";
 
 export class Game extends Phaser.Scene {
@@ -21,10 +22,28 @@ export class Game extends Phaser.Scene {
     );
 
     this.addRing({ x: 400, y: 100 });
-    // this.addRing({ x: 400, y: 400 });
+    this.addRing({ x: 400, y: 400, type: "red" });
+  }
+
+  init() {
+    this.data.set("upIsDown", false);
+    const upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+    upKey.on("down", () => this.data.set("upIsDown", true));
+    upKey.on("up", () => this.data.set("upIsDown", false));
+
+    this.data.set("downIsDown", false);
+    const downKey = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.DOWN
+    );
+    downKey.on("down", () => this.data.set("downIsDown", true));
+    downKey.on("up", () => this.data.set("downIsDown", false));
   }
 
   addRing({ x, y, type = "player" }) {
-    const ring = new Ring(this, x, y, type);
+    if (type === "player") {
+      return new PlayerRing(this, x, y, type);
+    }
+
+    return new Ring(this, x, y, "player");
   }
 }
